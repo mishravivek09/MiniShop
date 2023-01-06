@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Shop | Cart</title>
+  <link rel="stylesheet" href="./style.css" />
+  <style>
+    #container {
+      width: 95%;
+      margin: auto;
+      margin-top: 50px;
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      grid-template-rows: auto;
+      justify-content: left;
+      row-gap: 30px;
+    }
+
+    #container>div {
+      display: flex;
+      border: 1px solid #f6f6f6;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    #container>div>div {
+      width: 40vw;
+    }
+
+    #container>div>img {
+      width: 200px;
+    }
+
+    #container>div>div>button {
+      padding: 2px 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      display: block;
+      margin-top: 10px;
+      border: 1px solid gray;
+      color: white;
+      background-color: tomato;
+    }
+
+    #container>div>div>button:hover {
+      background-color: red;
+    }
+
+    #sorting>button {
+      padding: 2px 5px;
+      background-color: darkorange;
+      color: white;
+      cursor: pointer;
+      border: 1px solid gray;
+      border-radius: 2px 5px;
+    }
+
+    #sorting>button:hover {
+      background-color: orange;
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <div class="first_nav">
+      <div>
+        <h2><a class="logo1" href="index.html">Mini</a></h2>
+        <h3><a class="logo2" href="index.html">Shop</a></h3>
+      </div>
+      <div>
+        <input onkeyup="debounce(mySearchFunction(), 1000)" id="query" type="search"
+          placeholder="Try shirt, T-shirt, Mobile" />
+        <img onclick="searchPage()" class="search_icon" src="./icons/search.png" alt="icons" />
+      </div>
+      <div onclick="profileFun()">
+        <a class="cart-ref" href="#">
+          <img src="./icons/user.png" alt="icons" />
+        </a>
+        <a class="cart-ref" href="#">
+          <h3 id="profileName" class="menu">Profile</h3>
+        </a>
+      </div>
+      <div>
+        <a class="cart-ref" href="cart.html">
+          <img src="./icons/shopping-bag.png" alt="icons" />
+        </a>
+        <a class="cart-ref" href="cart.html">
+          <h3 id="cart_value" class="menu"><sub>Cart</sub></h3>
+        </a>
+      </div>
+    </div>
+  </nav>
+  <div id="sorting"></div>
+  <div id="container"></div>
+  <div id="body"></div>
+  <footer>
+    <div class="sociallink">
+      <div>
+        <a href="https://github.com/mishravivek09" target="_blank">
+          <img src="./icons/github.png" alt="github" />
+        </a>
+      </div>
+      <div>
+        <a href="https://www.linkedin.com/in/vivek-mishra-b9339717a/" target="_blank">
+          <img src="./icons/linkedin.png" alt="linkedin" />
+        </a>
+      </div>
+    </div>
+    <div class="admin">
+      <div onclick="verifyAdmin()"><a href="#">Admin</a></div>
+    </div>
+    <div class="terms">
+      <div>Privacy</div>
+      <div>Terms</div>
+      <div>FAQs</div>
+      <div>Help</div>
+    </div>
+    <div class="credits">
+      <div>
+        <a href="https://github.com/mishravivek09" target="_blank">@mishravivek09</a>
+      </div>
+      <div>All Right Reserved</div>
+      <div>
+        <a href="https://www.linkedin.com/in/vivek-mishra-b9339717a/" target="_blank">Designed By Vivek Mishra</a>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
+<script>
+  let loginData = JSON.parse(localStorage.getItem("session")) || [];
+  if (loginData.length == 0) {
+    document.querySelector("#profileName").innerHTML = "Profile";
+  } else {
+    document.querySelector("#profileName").innerHTML = `Hi, ${loginData.name}`;
+  }
+  function profileFun() {
+    if (loginData.length == 0) {
+      window.location.href = "signup.html";
+    } else {
+      window.location.href = "profile.html";
+    }
+  }
+
+  function priceCalculator(data) {
+    let totalPrice = 0;
+    data.forEach((elem) => {
+      totalPrice += elem.quantity * elem.price;
+    });
+    localStorage.setItem("totalPrice", totalPrice);
+    let dis = document.createElement("div");
+    dis.innerHTML = `Total Price : INR ${totalPrice.toLocaleString()}`;
+    let btn = document.createElement("button");
+    let button = document.createElement("button");
+    button.innerHTML = "Empty cart";
+    button.style.marginLeft = "60%";
+    button.addEventListener("click", function () {
+      emptyCart();
+    })
+    btn.innerHTML = "Proceed to checkout";
+    btn.addEventListener("click", function () {
+      checkOutFun();
+    });
+    let crt = document.querySelector("#cart_value");
+    crt.append(data.length);
+    document.querySelector("#sorting").append(dis, button, btn);
+  }
+  function emptyCart() {
+    fetch(`https://mini-project-production.up.railway.app:443/cart/remove/all/${loginData.cartId}`)
+      .then((res) => {
+        return res.json();
+      }).then((res) => {
+        alert(res.message);
+        window.location.reload();
+      }).catch((err) => {
+        console.log(err);
+      })
+  }
+  function getCartItems() {
+    fetch(`https://mini-project-production.up.railway.app:443/cart/get?cartId=${loginData.cartId}`).then((res) => {
+      return res.json();
+    }).then((res) => {
+      if (res.message == null) {
+        showCartItem(res);
+        priceCalculator(res);
+      } else {
+        let crt = document.querySelector("#cart_value");
+        crt.append("0");
+        let dis = document.createElement("div");
+        dis.innerHTML = `Total Price : INR ${0}`;
+        let btn = document.createElement("button");
+        btn.innerHTML = "Proceed to checkout";
+        btn.addEventListener("click", function () {
+          checkOutFun();
+        });
+        let button = document.createElement("button");
+        button.innerHTML = "Empty cart";
+        button.style.marginLeft = "60%";
+        button.addEventListener("click", function () {
+          emptyCart();
+        })
+        document.querySelector("#sorting").append(dis, button,btn);
+        let h2 = document.createElement("h2");
+        h2.innerHTML = "Cart is empty !";
+        h2.style.color = "red";
+        h2.style.textAlign = "center";
+        document.querySelector("#body").append(h2);
+      }
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+  window.onload = getCartItems();
+
+  function showCartItem(data) {
+    data.forEach((elem, index) => {
+      let div = document.createElement("div");
+      let cdiv = document.createElement("div");
+      let img = document.createElement("img");
+      let name = document.createElement("p");
+      let price = document.createElement("p");
+      let rat = document.createElement("p");
+      let cat = document.createElement("p");
+
+      let quant = document.createElement("select");
+      quant.addEventListener("change", function () {
+        updateQuantity(elem, quant);
+      });
+      let q = document.createElement("option");
+      let a = document.createElement("option");
+      let b = document.createElement("option");
+      let c = document.createElement("option");
+      let d = document.createElement("option");
+      let e = document.createElement("option");
+      let f = document.createElement("option");
+      let g = document.createElement("option");
+      let h = document.createElement("option");
+      let i = document.createElement("option");
+      let j = document.createElement("option");
+
+      a.innerHTML = "1";
+      b.innerHTML = "2";
+      c.innerHTML = "3";
+      d.innerHTML = "4";
+      e.innerHTML = "5";
+      f.innerHTML = "6";
+      g.innerHTML = "7";
+      h.innerHTML = "8";
+      i.innerHTML = "9";
+      j.innerHTML = "10";
+
+      a.value = "1";
+      b.value = "2";
+      c.value = "3";
+      d.value = "4";
+      e.value = "5";
+      f.value = "6";
+      g.value = "7";
+      h.value = "8";
+      i.value = "9";
+      j.value = "10";
+
+      img.src = elem.image;
+      name.innerHTML = elem.productName;
+      price.innerHTML = `INR ${elem.price.toLocaleString()}`;
+      rat.innerHTML = `Rating : ${elem.rating}`;
+      cat.innerHTML = `Category : ${elem.category}`;
+      q.innerHTML = `Quantity : ${elem.quantity}`;
+      q.value = elem.quantity;
+
+      let btn = document.createElement("button");
+      btn.innerHTML = "Remove";
+      btn.addEventListener("click", function () {
+        removeItemFromCart(elem, index);
+      });
+      quant.append(q, a, b, c, d, e, f, g, h, i, j);
+      cdiv.append(name, price, rat, cat, quant, btn);
+      div.append(img, cdiv);
+      document.querySelector("#container").append(div);
+    });
+  }
+  function updateQuantity(elem, quant) {
+    let productData = {
+      cartId: loginData.cartId,
+      category: elem.category,
+      image: elem.image,
+      price: elem.price,
+      productId: elem.productId,
+      productName: elem.productName,
+      quantity: quant.value,
+      rating: elem.rating,
+    };
+    let data = JSON.stringify(productData);
+    fetch("https://mini-project-production.up.railway.app:443/cart/update", {
+      method: "PUT",
+      body: data,
+      headers: {
+        "content-type": "application/json"
+      }
+    }).then((res) => {
+      return res.json();
+    }).then((res) => {
+      alert(res.message);
+      window.location.reload();
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+  function removeItemFromCart(elem, ind) {
+    let productData = {
+      cartId: loginData.cartId,
+      category: elem.category,
+      image: elem.image,
+      price: elem.price,
+      productId: elem.productId,
+      productName: elem.productName,
+      quantity: elem.quantity,
+      rating: elem.rating,
+    };
+    let data = JSON.stringify(productData);
+    fetch(`https://mini-project-production.up.railway.app:443/cart/remove`, {
+      method: "PUT",
+      body: data,
+      headers: {
+        "content-type": "application/json"
+      }
+    })
+      .then((res) => {
+        return res.json();
+      }).then((res) => {
+        alert(res.message);
+        window.location.href = "index.html";
+      }).catch((err) => {
+        console.log(err);
+      })
+  }
+  function checkOutFun() {
+    if (loginData.length == 0) {
+      alert("Please login first !");
+      window.location = "signup.html";
+    } else {
+      window.location.href = "order.html";
+    }
+  }
+  function mySearchFunction() {
+    let query = document.querySelector("#query").value;
+    let url = `https://mini-project-production.up.railway.app:443/product/search?query=${query}`;
+    localStorage.setItem("usrquery", query);
+    fetch(url)
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        localStorage.setItem("query", JSON.stringify(res));
+      })
+      .then((err) => {
+        console.log(err);
+      });
+  }
+  document
+    .querySelector("#query")
+    .addEventListener("keypress", showSearchResult);
+
+  function showSearchResult(e) {
+    if (e.keyCode == 13) {
+      window.location.href = "search.html";
+    }
+  }
+  let id;
+  function debounce(func, delay) {
+    if (id) {
+      clearTimeout(id);
+    }
+    id = setTimeout(function () {
+      func();
+    }, delay);
+  }
+  function searchPage() {
+    window.location.href = "search.html";
+  }
+  function verifyAdmin() {
+    let email = prompt("Enter your email", "abc@gmail.com");
+    let passwd = prompt("Enter your password", "John@1947");
+
+    let data = {
+      email: email,
+      password: passwd
+    }
+    let admin = JSON.stringify(data);
+    fetch("https://mini-project-production.up.railway.app:443/admin/login", {
+      method: "POST",
+      body: admin,
+      headers: {
+        "content-type": "application/json",
+      }
+    }).then((res) => {
+      return res.json();
+    }).then((res) => {
+      if (res.message == null) {
+        alert("Verified successfully..");
+        window.location.href = "admin.html";
+      } else {
+        alert(res.message);
+      }
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+</script>

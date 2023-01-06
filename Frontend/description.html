@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Shop | Product details</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <nav>
+    <div class="first_nav">
+      <div>
+        <h2><a class="logo1" href="index.html">Mini</a></h2>
+        <h3><a class="logo2" href="index.html">Shop</a></h3>
+      </div>
+      <div>
+        <input onkeyup="debounce(mySearchFunction(), 1000)" id="query" type="search"
+          placeholder="Try shirt, T-shirt, Mobile" />
+        <img onclick="searchPage()" class="search_icon" src="./icons/search.png" alt="icons" />
+      </div>
+      <div onclick="profileFun()">
+        <a class="cart-ref" href="#">
+          <img src="./icons/user.png" alt="icons" />
+        </a>
+        <a class="cart-ref" href="#">
+          <h3 id="profileName" class="menu">Profile</h3>
+        </a>
+      </div>
+      <div>
+        <a class="cart-ref" href="cart.html">
+          <img src="./icons/shopping-bag.png" alt="icons" />
+        </a>
+        <a class="cart-ref" href="cart.html">
+          <h3 id="cart_value" class="menu"><sub>Cart</sub></h3>
+        </a>
+      </div>
+    </div>
+  </nav>
+  <div id="menu-options">
+    <div onclick="categories()">
+      <h4>Men</h4>
+    </div>
+    <div onclick="categories()">
+      <h4>Women</h4>
+    </div>
+    <div onclick="categories()">
+      <h4>Kids</h4>
+    </div>
+    <div onclick="categories()">
+      <h4>Sports</h4>
+    </div>
+    <div onclick="categories()">
+      <h4>Cosmetics</h4>
+    </div>
+    <div onclick="categories()">
+      <h4>Electronics</h4>
+    </div>
+    <div onclick="categories()">
+      <h4>Stationary</h4>
+    </div>
+  </div>
+  <div class="des_content">
+    <div id="des_img"></div>
+    <div id="prod_details"></div>
+  </div>
+  <h3 id="dis"></h3>
+  <footer>
+    <div class="sociallink">
+      <div>
+        <a href="https://github.com/mishravivek09" target="_blank">
+          <img src="./icons/github.png" alt="github" />
+        </a>
+      </div>
+      <div>
+        <a href="https://www.linkedin.com/in/vivek-mishra-b9339717a/" target="_blank">
+          <img src="./icons/linkedin.png" alt="linkedin" />
+        </a>
+      </div>
+    </div>
+    <div class="admin">
+      <div onclick="verifyAdmin()"><a href="#">Admin</a></div>
+    </div>
+    <div class="terms">
+      <div>Privacy</div>
+      <div>Terms</div>
+      <div>FAQs</div>
+      <div>Help</div>
+    </div>
+    <div class="credits">
+      <div>
+        <a href="https://github.com/mishravivek09" target="_blank">@mishravivek09</a>
+      </div>
+      <div>All Right Reserved</div>
+      <div>
+        <a href="https://www.linkedin.com/in/vivek-mishra-b9339717a/" target="_blank">Designed By Vivek Mishra</a>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
+<script>
+  let clicked_data = JSON.parse(localStorage.getItem("clicked"));
+
+  function showData(clicked_data) {
+    let img = document.createElement("img");
+    img.src = clicked_data.image;
+    let div = document.createElement("div");
+    let p = document.createElement("p");
+    let n = document.createElement("p");
+    let r = document.createElement("p");
+    let c = document.createElement("p");
+    n.innerText = clicked_data.productName;
+    p.innerText = `Price : ${clicked_data.price.toLocaleString()}`;
+    r.innerText = `Rating : ${clicked_data.rating}`;
+    c.innerText = `Category : ${clicked_data.category}`;
+    let btn1 = document.createElement("button");
+    let btn2 = document.createElement("button");
+    let dis = document.createElement("div");
+    dis.innerHTML = "1";
+    let cdiv = document.createElement("div");
+    let btn = document.createElement("button");
+    btn1.innerText = "-";
+    btn2.innerText = "+";
+    btn1.addEventListener("click", function () {
+      quantDecrease(dis);
+    });
+    btn2.addEventListener("click", function () {
+      quantIncrease(dis);
+    });
+    btn.innerText = "Add to cart";
+    btn.addEventListener("click", function () {
+      addToCart();
+    });
+    btn.setAttribute("class", "cart_btn");
+    let h3 = document.createElement("h3");
+    h3.innerText = "Quantity";
+    cdiv.append(btn1, dis, btn2);
+    div.append(n, p, r, c, h3);
+    document.querySelector("#prod_details").append(div, cdiv, btn);
+    document.querySelector("#des_img").append(img);
+  }
+  window.onload = showData(clicked_data);
+  let quant = 1;
+  function quantIncrease(dis) {
+    quant++;
+    if (quant > clicked_data.quantity || quant > 10) {
+      alert(`Quantity can't be more than ${quant - 1} !`);
+      quant = quant - 1;
+    }
+    dis.innerHTML = quant;
+  }
+  function quantDecrease(dis) {
+    quant--;
+    if (quant < 1) {
+      alert("Quantity can't be less than one !");
+      quant = 1;
+    }
+    dis.innerHTML = quant;
+  }
+  let loginData = JSON.parse(localStorage.getItem("session")) || [];
+  function addToCart() {
+    if (loginData.length == 0) {
+      alert("Please login first..!");
+    } else {
+      let productData = {
+        cartId: loginData.cartId,
+        category: clicked_data.category,
+        image: clicked_data.image,
+        price: clicked_data.price,
+        productId: clicked_data.productId,
+        productName: clicked_data.productName,
+        quantity: quant,
+        rating: clicked_data.rating,
+      };
+      let data = JSON.stringify(productData);
+      fetch("https://mini-project-production.up.railway.app:443/cart/add", {
+        method: "POST",
+        body: data,
+        headers: {
+          "content-type": "application/json"
+        }
+      }).then((res) => {
+        return res.json();
+      }).then((res) => {
+        if (res.message != "Product already exist in cart..") {
+          alert(res.message);
+          window.location.reload();
+        } else {
+          alert(res.message);
+        }
+      }).catch((err) => {
+        console.log(err);
+      })
+    }
+  }
+
+  if (loginData.length == 0) {
+    document.querySelector("#profileName").innerHTML = "Profile";
+  } else {
+    document.querySelector("#profileName").innerHTML = `Hi, ${loginData.name}`;
+  }
+  function profileFun() {
+    if (loginData.length == 0) {
+      window.location.href = "signup.html";
+    } else {
+      window.location.href = "profile.html";
+    }
+  }
+
+
+  function mySearchFunction() {
+    let query = document.querySelector("#query").value;
+    let url = `https://mini-project-production.up.railway.app:443/product/search?query=${query}`;
+    localStorage.setItem("usrquery", query);
+    fetch(url)
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        localStorage.setItem("query", JSON.stringify(res));
+      })
+      .then((err) => {
+        console.log(err);
+      });
+  }
+  document
+    .querySelector("#query")
+    .addEventListener("keypress", showSearchResult);
+
+  function showSearchResult(e) {
+    if (e.keyCode == 13) {
+      window.location.href = "search.html";
+    }
+  }
+  function categories() {
+    let data = event.target.innerHTML;
+    let pagecategory = data.toUpperCase();
+    localStorage.setItem("pagecategory", pagecategory);
+    window.location.href = "category.html";
+  }
+  let id;
+  function debounce(func, delay) {
+    if (id) {
+      clearTimeout(id);
+    }
+    id = setTimeout(function () {
+      func();
+    }, delay);
+  }
+  function searchPage() {
+    window.location.href = "search.html";
+  }
+  function verifyAdmin() {
+    let email = prompt("Enter your email", "abc@gmail.com");
+    let passwd = prompt("Enter your password", "John@1947");
+
+    let data = {
+      email: email,
+      password: passwd
+    }
+    let admin = JSON.stringify(data);
+    fetch("https://mini-project-production.up.railway.app:443/admin/login", {
+      method: "POST",
+      body: admin,
+      headers: {
+        "content-type": "application/json",
+      }
+    }).then((res) => {
+      return res.json();
+    }).then((res) => {
+      if (res.message == null) {
+        alert("Verified successfully..");
+        window.location.href = "admin.html";
+      } else {
+        alert(res.message);
+      }
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+  function getCartItems() {
+    fetch(`https://mini-project-production.up.railway.app:443/cart/get?cartId=${loginData.cartId}`).then((res) => {
+      return res.json();
+    }).then((res) => {
+      if (res.message == null) {
+        let crt = document.querySelector("#cart_value");
+        crt.append(res.length);
+      } else {
+        let crt = document.querySelector("#cart_value");
+        crt.append("0");
+      }
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+  window.onload = getCartItems();
+</script>

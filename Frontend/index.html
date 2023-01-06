@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mini Shop | Home</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav>
+      <div class="first_nav">
+        <div>
+          <h2><a class="logo1" href="index.html">Mini</a></h2>
+          <h3><a class="logo2" href="index.html">Shop</a></h3>
+        </div>
+        <div>
+          <input
+            onkeyup="debounce(mySearchFunction(), 1000)"
+            id="query"
+            type="search"
+            placeholder="Try shirt, T-shirt, Mobile"
+          />
+          <img onclick="searchPage()" class="search_icon" src="./icons/search.png" alt="icons" />
+        </div>
+        <div onclick="profileFun()">
+          <a class="cart-ref" href="#">
+            <img src="./icons/user.png" alt="icons" />
+          </a>
+          <a class="cart-ref" href="#">
+            <h3 id="profileName" class="menu">Profile</h3>
+          </a>
+        </div>
+        <div>
+          <a class="cart-ref" href="cart.html">
+            <img src="./icons/shopping-bag.png" alt="icons" />
+          </a>
+          <a class="cart-ref" href="cart.html">
+            <h3 id="cart_value" class="menu"><sub>Cart</sub></h3>
+          </a>
+        </div>
+      </div>
+    </nav>
+    <div id="menu-options">
+      <div onclick="categories()">
+        <h4>Men</h4>
+      </div>
+      <div onclick="categories()">
+        <h4>Women</h4>
+      </div>
+      <div onclick="categories()">
+        <h4>Kids</h4>
+      </div>
+      <div onclick="categories()">
+        <h4>Sports</h4>
+      </div>
+      <div onclick="categories()">
+        <h4>Cosmetics</h4>
+      </div>
+      <div onclick="categories()">
+        <h4>Electronics</h4>
+      </div>
+      <div onclick="categories()">
+        <h4>Stationary</h4>
+      </div>
+    </div>
+    <h1>Great indian sales is going on , Hurry Up !</h1>
+    <div id="container">
+      <div id="slideshow">
+        <img src="./Images/bg.jpg" alt="bg" />
+      </div>
+      <div id="trending">
+        <div id="women">
+          <h2>Top women's wear</h2>
+        </div>
+        <div id="men">
+          <h2>Top men's wear</h2>
+        </div>
+        <div id="sports">
+          <h2>Top trending sport's</h2>
+        </div>
+        <div id="kids">
+          <h2>Top kid's wear</h2>
+        </div>
+        <div id="cosmetics">
+          <h2>Most searched cosmetics</h2>
+        </div>
+        <div id="mobiles">
+          <h2>Top trending mobiles</h2>
+        </div>
+        <div id="laptops">
+          <h2>Top trending laptops</h2>
+        </div>
+        <div id="stationary">
+          <h2>Top read's books</h2>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="sociallink">
+        <div>
+          <a href="https://github.com/mishravivek09" target="_blank">
+            <img src="./icons/github.png" alt="github" />
+          </a>
+        </div>
+        <div>
+          <a href="https://www.linkedin.com/in/vivek-mishra-b9339717a/" target="_blank"> 
+            <img src="./icons/linkedin.png" alt="linkedin" />
+          </a>
+        </div>
+      </div>
+      <div class="admin">
+        <div onclick="verifyAdmin()"><a href="#">Admin</a></div>
+      </div>
+      <div class="terms">
+        <div>Privacy</div>
+        <div>Terms</div>
+        <div>FAQs</div>
+        <div>Help</div>
+      </div>
+      <div class="credits">
+        <div>
+          <a href="https://github.com/mishravivek09" target="_blank"
+            >@mishravivek09</a
+          >
+        </div>
+        <div>All Right Reserved</div>
+        <div>
+          <a
+            href="https://www.linkedin.com/in/vivek-mishra-b9339717a/"
+            target="_blank"
+            >Designed By Vivek Mishra</a
+          >
+        </div>
+      </div>
+    </footer>
+  </body>
+  <script src="./main.js"></script>
+</html>

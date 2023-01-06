@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Shop | Banking</title>
+  <link rel="stylesheet" href="./style.css" />
+  <style>
+    #container {
+      border: 1px solid grey;
+      width: 40%;
+      margin: auto;
+      margin-top: 50px;
+      text-align: center;
+      border-radius: 10px;
+      color: blue;
+    }
+
+    #container>form {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      grid-template-rows: auto;
+      padding: 25px;
+      margin-top: 20px;
+      margin-bottom: 10vh;
+      row-gap: 25px;
+    }
+
+    #container>form>input {
+      padding: 5px;
+      background-color: azure;
+      outline: none;
+    }
+
+    #container>form>select {
+      padding: 5px;
+      cursor: pointer;
+      background-color: azure;
+      outline: none;
+    }
+
+    #container>form>button {
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: aquamarine;
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <div class="first_nav">
+      <div>
+        <h2><a class="logo1" href="index.html">Mini</a></h2>
+        <h3><a class="logo2" href="index.html">Shop</a></h3>
+      </div>
+      <div>
+        <input onkeyup="debounce(mySearchFunction(), 1000)" id="query" type="search"
+          placeholder="Try shirt, T-shirt, Mobile" />
+        <img onclick="searchPage()" class="search_icon" src="./icons/search.png" alt="icons" />
+      </div>
+      <div onclick="profileFun()">
+        <a class="cart-ref" href="#">
+          <img src="./icons/user.png" alt="icons" />
+        </a>
+        <a class="cart-ref" href="#">
+          <h3 id="profileName" class="menu">Profile</h3>
+        </a>
+      </div>
+      <div>
+        <a class="cart-ref" href="cart.html">
+          <img src="./icons/shopping-bag.png" alt="icons" />
+        </a>
+        <a class="cart-ref" href="cart.html">
+          <h3 id="cart_value" class="menu"><sub>Cart</sub></h3>
+        </a>
+      </div>
+    </div>
+  </nav>
+  <div id="container">
+    <h2>Add Bank Account</h2>
+    <form id="form" onsubmit="addBankAccount()">
+      <select id="bank">
+        <option value="SBI">SELECT : STATE BANK OF INDIA</option>
+        <option value="ICICI">ICICI BANK</option>
+        <option value="PNB">PUNJAB NATIONAL BANK</option>
+        <option value="KOTAK">KOTAK MAHINDRA BANK</option>
+      </select>
+      <select id="ifsc">
+        <option value="SBIN0005943">IFSC : SBIN0005943</option>
+        <option value="ICIC0001354">ICIC0001354</option>
+        <option value="PUNB0901600">PUNB0901600</option>
+        <option value="KKBK0000195">KKBK0000195</option>
+      </select>
+      <input id="pin" type="text" placeholder="enter pincode" />
+      <button>Add account</button>
+    </form>
+  </div>
+  <footer>
+    <div class="sociallink">
+      <div>
+        <a href="https://github.com/mishravivek09" target="_blank">
+          <img src="./icons/github.png" alt="github" />
+        </a>
+      </div>
+      <div>
+        <a href="https://www.linkedin.com/in/vivek-mishra-b9339717a/" target="_blank">
+          <img src="./icons/linkedin.png" alt="linkedin" />
+        </a>
+      </div>
+    </div>
+    <div class="admin">
+      <div onclick="verifyAdmin()"><a href="#">Admin</a></div>
+    </div>
+    <div class="terms">
+      <div>Privacy</div>
+      <div>Terms</div>
+      <div>FAQs</div>
+      <div>Help</div>
+    </div>
+    <div class="credits">
+      <div>
+        <a href="https://github.com/mishravivek09" target="_blank">@mishravivek09</a>
+      </div>
+      <div>All Right Reserved</div>
+      <div>
+        <a href="https://www.linkedin.com/in/vivek-mishra-b9339717a/" target="_blank">Designed By Vivek Mishra</a>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
+<script>
+  let loginData = JSON.parse(localStorage.getItem("session")) || [];
+  let accountData = JSON.parse(localStorage.getItem("account_data")) || [];
+  if (accountData.length != 0) {
+    window.location.href = "profile.html";
+  }
+  function addBankAccount() {
+    event.preventDefault();
+    let form = document.querySelector("#form");
+    let bank = form.bank.value;
+    let ifsc = form.ifsc.value;
+    let flag = false;
+    if (bank == "SBI" && ifsc == "SBIN0005943") {
+      flag = true;
+    } else if (bank == "ICICI" && ifsc == "ICIC0001354") {
+      flag = true;
+    } else if (bank == "PNB" && ifsc == "PUNB0901600") {
+      flag = true;
+    } else if (bank == "KOTAK" && ifsc == "KKBK0000195") {
+      flag = true;
+    }
+    if (!flag) {
+      alert("Invalid ifsc code..");
+    } else {
+      let pin = form.pin.value;
+      if (pin.length != 4) {
+        alert("pin should be 4 digit number..");
+      } else {
+        let accountData = {
+          account: {
+            bank_Name: form.bank.value,
+            ifsc: form.ifsc.value,
+            pin_number: form.pin.value,
+            balance: 3000,
+          },
+          customerid: loginData.customerId,
+        };
+        let jsonData = JSON.stringify(accountData);
+        addAccount(jsonData);
+      }
+    }
+  }
+  function addAccount(data) {
+    let url = `https://mini-project-production.up.railway.app:443/account/register`;
+    fetch(url, {
+      method: "POST",
+      body: data,
+      headers: {
+        "content-type": "application/json",
+      }
+    }).then((res) => {
+      return res.json();
+    }).then((res) => {
+      if (!res.message == "") {
+        alert(res.message);
+        window.location.href = "profile.html";
+      } else {
+        localStorage.setItem("account_data", JSON.stringify(res));
+        alert("Account added successfully..");
+        form.reset();
+        window.location.href = "profile.html";
+      }
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+  if (loginData.length == 0) {
+    document.querySelector("#profileName").innerHTML = "Profile";
+    window.location.href = "index.html";
+  } else {
+    document.querySelector("#profileName").innerHTML = `Hi, ${loginData.name}`;
+  }
+  function profileFun() {
+    if (loginData.length == 0) {
+      window.location.href = "signup.html";
+    } else {
+      window.location.href = "profile.html";
+    }
+  }
+  let id;
+  function debounce(func, delay) {
+    if (id) {
+      clearTimeout(id);
+    }
+    id = setTimeout(function () {
+      func();
+    }, delay);
+  }
+  function searchPage() {
+    window.location.href = "search.html";
+  }
+  function verifyAdmin() {
+    let email = prompt("Enter your email", "abc@gmail.com");
+    let passwd = prompt("Enter your password", "John@1947");
+
+    let data = {
+      email: email,
+      password: passwd
+    }
+    let admin = JSON.stringify(data);
+    fetch("https://mini-project-production.up.railway.app:443/admin/login", {
+      method: "POST",
+      body: admin,
+      headers: {
+        "content-type": "application/json",
+      }
+    }).then((res) => {
+      return res.json();
+    }).then((res) => {
+      if (res.message == null) {
+        alert("Verified successfully..");
+        window.location.href = "admin.html";
+      } else {
+        alert(res.message);
+      }
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+  function getCartItems() {
+    fetch(`https://mini-project-production.up.railway.app:443/cart/get?cartId=${loginData.cartId}`).then((res) => {
+      return res.json();
+    }).then((res) => {
+      if (res.message == null) {
+        let crt = document.querySelector("#cart_value");
+        crt.append(res.length);
+      } else {
+        let crt = document.querySelector("#cart_value");
+        crt.append("0");
+      }
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+  window.onload = getCartItems();
+</script>

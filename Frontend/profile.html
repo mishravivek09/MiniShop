@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Shop | User Profile</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <nav>
+    <div class="first_nav">
+      <div>
+        <h2><a class="logo1" href="index.html">Mini</a></h2>
+        <h3><a class="logo2" href="index.html">Shop</a></h3>
+      </div>
+      <div>
+        <input onkeyup="debounce(mySearchFunction(), 1000)" id="query" type="search"
+          placeholder="Try shirt, T-shirt, Mobile" />
+        <img onclick="searchPage()" class="search_icon" src="./icons/search.png" alt="icons" />
+      </div>
+      <div onclick="profileFun()">
+        <a class="cart-ref" href="#">
+          <img src="./icons/user.png" alt="icons" />
+        </a>
+        <a class="cart-ref" href="#">
+          <h3 id="profileName" class="menu">Profile</h3>
+        </a>
+      </div>
+      <div>
+        <a class="cart-ref" href="cart.html">
+          <img src="./icons/shopping-bag.png" alt="icons" />
+        </a>
+        <a class="cart-ref" href="cart.html">
+          <h3 id="cart_value" class="menu"><sub>Cart</sub></h3>
+        </a>
+      </div>
+    </div>
+  </nav>
+  <div id="menu-options">
+    <div onclick="categories()">
+      <h4>Men</h4>
+    </div>
+    <div onclick="categories()">
+      <h4>Women</h4>
+    </div>
+    <div onclick="categories()">
+      <h4>Kids</h4>
+    </div>
+    <div onclick="categories()">
+      <h4>Sports</h4>
+    </div>
+    <div onclick="categories()">
+      <h4>Cosmetics</h4>
+    </div>
+    <div onclick="categories()">
+      <h4>Electronics</h4>
+    </div>
+    <div onclick="categories()">
+      <h4>Stationary</h4>
+    </div>
+  </div>
+  <div class="usr_details">
+    <h3 id="nameData"></h3>
+    <form id="form">
+      <input id="usr_name" disabled type="text" />
+      <input id="usr_email" disabled type="text" />
+      <input id="date" disabled type="text" />
+      <button onclick="updateFunction()">Update profile</button>
+      <button onclick="veiwOrders()">Orders</button>
+      <button onclick="checkOrderStatus()">Check order status</button>
+      <button onclick="cancelOrder()">Cancel order</button>
+      <button onclick="transaction()">Bank Service</button>
+      <button onclick="logoutFun()">Logout</button>
+    </form>
+  </div>
+  <footer>
+    <div class="sociallink">
+      <div>
+        <a href="https://github.com/mishravivek09" target="_blank">
+          <img src="./icons/github.png" alt="github" />
+        </a>
+      </div>
+      <div>
+        <a href="https://www.linkedin.com/in/vivek-mishra-b9339717a/" target="_blank">
+          <img src="./icons/linkedin.png" alt="linkedin" />
+        </a>
+      </div>
+    </div>
+    <div class="admin">
+      <div onclick="verifyAdmin()"><a href="#">Admin</a></div>
+    </div>
+    <div class="terms">
+      <div>Privacy</div>
+      <div>Terms</div>
+      <div>FAQs</div>
+      <div>Help</div>
+    </div>
+    <div class="credits">
+      <div>
+        <a href="https://github.com/mishravivek09" target="_blank">@mishravivek09</a>
+      </div>
+      <div>All Right Reserved</div>
+      <div>
+        <a href="https://www.linkedin.com/in/vivek-mishra-b9339717a/" target="_blank">Designed By Vivek Mishra</a>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
+<script>
+  let loginData = JSON.parse(localStorage.getItem("session")) || [];
+  function profileDetails() {
+    let form = document.querySelector("#form");
+    let name = form.usr_name;
+    let email = form.usr_email;
+    let time = form.date;
+    name.value = loginData.name;
+    email.value = loginData.email;
+    time.value = loginData.dateTime;
+    document.querySelector(
+      "#nameData"
+    ).innerHTML = `Welcome ${loginData.name} &#128515`;
+  }
+  window.onload = profileDetails();
+  function updateFunction() {
+    let form = `
+    <nav>
+      <div class="first_nav">
+        <div>
+          <h2><a class="logo1" href="index.html">Mini</a></h2>
+          <h3><a class="logo2" href="index.html">Shop</a></h3>
+        </div>
+        <div>
+          <input
+            onkeyup="mySearchFunction()"
+            id="query"
+            type="search"
+            placeholder="Try shirt, T-shirt, Mobile"
+          />
+          <img class="search_icon" src="./icons/search.png" alt="icons" />
+        </div>
+        <div onclick="profileFun()">
+          <a class="cart-ref" href="#">
+            <img src="./icons/user.png" alt="icons" />
+          </a>
+          <a class="cart-ref" href="#">
+            <h3 id="profileName" class="menu">Profile</h3>
+          </a>
+        </div>
+        <div>
+          <a class="cart-ref" href="cart.html">
+            <img src="./icons/shopping-bag.png" alt="icons" />
+          </a>
+          <a class="cart-ref" href="cart.html">
+            <h3 id="cart_value" class="menu"><sub>Cart</sub></h3>
+          </a>
+        </div>
+      </div>
+    </nav>
+      <div class="registration-form">
+        <div>
+          <h2>Enter Details</h2>
+          <form id="uform" onSubmit="updateProfile()">
+            <input
+              id="name"
+              required
+              type="text"
+              placeholder="enter your name"
+            />
+            <input
+              id="email"
+              required
+              type="email"
+              placeholder="enter your email"
+            />
+            <input
+              id="password"
+              required
+              type="password"
+              placeholder="enter your password"
+            />
+            <select id="gender">
+              <option value="MALE">Male</option>
+              <option value="FEMALE">Female</option>
+              <option value="OTHER">Other</option>
+            </select>
+            <h3>Address Details</h3>
+            <input
+              id="house"
+              required
+              type="text"
+              placeholder="enter house,flat,apartment"
+            />
+            <input
+              id="city"
+              required
+              type="text"
+              placeholder="enter city"
+            />
+            <input
+              id="pincode"
+              required
+              type="text"
+              placeholder="enter pincode"
+            />
+            <input
+              id="state"
+              required
+              type="text"
+              placeholder="enter state"
+            />
+            <button>Update Profile</button>
+          </form>
+        </div>
+      </div>
+      `;
+    document.querySelector("body").innerHTML = form;
+  }
+
+  function updateProfile() {
+    event.preventDefault();
+    let form = document.querySelector("#uform");
+    let data = {
+      name: document.querySelector("#name").value,
+      email: document.querySelector("#email").value,
+      password: document.querySelector("#password").value,
+      gender: document.querySelector("#gender").value,
+      address: {
+        city: document.querySelector("#city").value,
+        house_no: document.querySelector("#house").value,
+        pincode: document.querySelector("#pincode").value,
+        state: document.querySelector("#state").value,
+      },
+    };
+    let updateData = JSON.stringify(data);
+    let url = `https://mini-project-production.up.railway.app:443/customer/update?uuid=${loginData.sessionId}`;
+    fetch(url, {
+      method: "PUT",
+      body: updateData,
+      headers: {
+        "content-type": "application/json",
+      },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        if (res.message != "Validation Error") {
+          localStorage.setItem("session", JSON.stringify(res));
+          alert(res.message);
+          form.reset();
+          window.location.href = "index.html";
+        } else {
+          alert(res.details);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  if (loginData.length == 0) {
+    document.querySelector("#profileName").innerHTML = "Profile";
+    window.location.href = "signup.html";
+  } else {
+    document.querySelector("#profileName").innerHTML = `Hi, ${loginData.name}`;
+  }
+  function logoutFun() {
+    let url = `https://mini-project-production.up.railway.app:443/customer/logout?uuid=${loginData.sessionId}`;
+    fetch(url, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        alert("Logged out successfully..");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    localStorage.removeItem("account_data");
+    localStorage.removeItem("session");
+  }
+  function checkOrderStatus() {
+    event.preventDefault();
+    let email = loginData.email;
+    let id = prompt("Please enter order id", "0");
+
+    let url = `https://mini-project-production.up.railway.app:443/orders/status/${email}?orderid=${id}`;
+
+    fetch(url)
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        if (res.message == "Invalid order id..") {
+          alert(res.message);
+        } else if (res.message == "Customer not registered..") {
+          alert(res.message);
+        } else {
+          let x = `Hello '${loginData.name}' your order status is '${res.status}'`;
+          alert(x);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  function cancelOrder() {
+    event.preventDefault();
+    let email = loginData.email;
+    let id = prompt("Please enter order id", "0");
+    let url = `https://mini-project-production.up.railway.app:443/orders/cancel/${email}?orderid=${id}`;
+
+    fetch(url, {
+      method: "PUT",
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        if (res.message == "Invalid order id..") {
+          alert(res.message);
+        } else if (res.message == "Customer not registered..") {
+          alert(res.message);
+        } else {
+          let x = `Hello '${loginData.name}' your order is '${res.status}'`;
+          alert(x);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  function veiwOrders() {
+    event.preventDefault();
+    window.location.href = "veiworders.html";
+  }
+  function mySearchFunction() {
+    let query = document.querySelector("#query").value;
+    let url = `https://mini-project-production.up.railway.app:443/product/search?query=${query}`;
+    localStorage.setItem("usrquery", query);
+    fetch(url)
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        localStorage.setItem("query", JSON.stringify(res));
+      })
+      .then((err) => {
+        console.log(err);
+      });
+  }
+  document
+    .querySelector("#query")
+    .addEventListener("keypress", showSearchResult);
+
+  function showSearchResult(e) {
+    if (e.keyCode == 13) {
+      window.location.href = "search.html";
+    }
+  }
+  function transaction() {
+    event.preventDefault();
+    window.location.href = "transaction.html";
+  }
+  function categories() {
+    let data = event.target.innerHTML;
+    let pagecategory = data.toUpperCase();
+    localStorage.setItem("pagecategory", pagecategory);
+    window.location.href = "category.html";
+  }
+  let id;
+  function debounce(func, delay) {
+    if (id) {
+      clearTimeout(id);
+    }
+    id = setTimeout(function () {
+      func();
+    }, delay);
+  }
+  function searchPage() {
+    window.location.href = "search.html";
+  }
+  function verifyAdmin() {
+    let email = prompt("Enter your email", "abc@gmail.com");
+    let passwd = prompt("Enter your password", "John@1947");
+
+    let data = {
+      email: email,
+      password: passwd
+    }
+    let admin = JSON.stringify(data);
+    fetch("https://mini-project-production.up.railway.app:443/admin/login", {
+      method: "POST",
+      body: admin,
+      headers: {
+        "content-type": "application/json",
+      }
+    }).then((res) => {
+      return res.json();
+    }).then((res) => {
+      if (res.message == null) {
+        alert("Verified successfully..");
+        window.location.href = "admin.html";
+      } else {
+        alert(res.message);
+      }
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+  function getCartItems() {
+    fetch(`https://mini-project-production.up.railway.app:443/cart/get?cartId=${loginData.cartId}`).then((res) => {
+      return res.json();
+    }).then((res) => {
+      if (res.message == null) {
+        let crt = document.querySelector("#cart_value");
+        crt.append(res.length);
+      } else {
+        let crt = document.querySelector("#cart_value");
+        crt.append("0");
+      }
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+  window.onload = getCartItems();
+</script>

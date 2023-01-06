@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Project</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <nav>
+        <div class="first_nav">
+          <div>
+            <h2><a class="logo1" href="index.html">Mini</a></h2>
+            <h3><a class="logo2" href="index.html">Shop</a></h3>
+          </div>
+          <div>
+            <input
+              onkeyup="mySearchFunction()"
+              onkeyup="debounce(clousers, 2000)"
+              id="query"
+              type="search"
+              placeholder="Try shirt, T-shirt, Mobile"
+            />
+            <img class="search_icon" src="./icons/search.png" alt="icons" />
+          </div>
+          <div onclick="profileFun()">
+            <a class="cart-ref" href="#">
+              <img src="./icons/user.png" alt="icons" />
+            </a>
+            <a class="cart-ref" href="#">
+              <h3 id="profileName" class="menu">Profile</h3>
+            </a>
+          </div>
+          <div>
+            <a class="cart-ref" href="cart.html">
+              <img src="./icons/shopping-bag.png" alt="icons" />
+            </a>
+            <a class="cart-ref" href="cart.html">
+              <h3 id="cart_value" class="menu"><sub>Cart</sub></h3>
+            </a>
+          </div>
+        </div>
+      </nav>
+      <footer>
+        <div class="sociallink">
+          <div>
+            <a href="https://github.com/mishravivek09" target="_blank">
+              <img src="./icons/github.png" alt="github" />
+            </a>
+          </div>
+          <div>
+            <a href="https://www.linkedin.com/in/vivek-mishra-b9339717a/" target="_blank"> 
+              <img src="./icons/linkedin.png" alt="linkedin" />
+            </a>
+          </div>
+        </div>
+        <div class="admin">
+          <div onclick="verifyAdmin()"><a href="#">Admin</a></div>
+        </div>
+        <div class="terms">
+          <div>Privacy</div>
+          <div>Terms</div>
+          <div>FAQs</div>
+          <div>Help</div>
+        </div>
+        <div class="credits">
+          <div>
+            <a href="https://github.com/mishravivek09" target="_blank"
+              >@mishravivek09</a
+            >
+          </div>
+          <div>All Right Reserved</div>
+          <div>
+            <a
+              href="https://www.linkedin.com/in/vivek-mishra-b9339717a/"
+              target="_blank"
+              >Designed By Vivek Mishra</a
+            >
+          </div>
+        </div>
+      </footer>
+</body>
+</html>

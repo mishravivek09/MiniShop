@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Shop | Admin</title>
+  <link rel="stylesheet" href="./style.css" />
+  <style>
+    #container {
+      width: 95%;
+      margin: auto;
+      margin-top: 50px;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+
+    #container>h2 {
+      opacity: 0;
+      margin-bottom: 25px;
+    }
+
+    #containers {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: auto;
+      gap: 20px;
+      margin: auto;
+      width: 95%;
+      margin-top: 50px;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+
+    #containers>div {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: auto;
+      padding: 20px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+        rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+      border-radius: 10px;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    #containers>div>div>img {
+      width: 200px;
+    }
+    #productForm{
+      width: 40%;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(1,1fr);
+      grid-template-rows: auto;
+      row-gap: 25px;
+      padding: 25px;
+      border-radius: 5px;
+      border: 1px solid grey;
+    }
+    #productForm>input{
+      padding: 3px;
+    }
+    #productForm>button{
+      cursor: pointer;
+      padding: 2px;
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <div class="first_nav">
+      <div>
+        <h2><a class="logo1" href="index.html">Mini</a></h2>
+        <h3><a class="logo2" href="index.html">Shop</a></h3>
+      </div>
+      <div>
+        <input onkeyup="debounce(mySearchFunction(), 1000)" id="query" type="search"
+          placeholder="Try shirt, T-shirt, Mobile" />
+        <img onclick="searchPage()" class="search_icon" src="./icons/search.png" alt="icons" />
+      </div>
+      <div onclick="profileFun()">
+        <a class="cart-ref" href="#">
+          <img src="./icons/user.png" alt="icons" />
+        </a>
+        <a class="cart-ref" href="#">
+          <h3 id="profileName" class="menu">Profile</h3>
+        </a>
+      </div>
+      <div>
+        <a class="cart-ref" href="cart.html">
+          <img src="./icons/shopping-bag.png" alt="icons" />
+        </a>
+        <a class="cart-ref" href="cart.html">
+          <h3 id="cart_value" class="menu"><sub>Cart</sub></h3>
+        </a>
+      </div>
+    </div>
+  </nav>
+  <h2 class="h2">Welcome Admin</h2>
+  <div id="adminTable">
+    <table>
+      <thead>
+        <th>Sr No.</th>
+        <th>Model</th>
+        <th>Task</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Customer</td>
+          <td>
+            <button onclick="addCustomer()">Add Customer</button>
+            <button onclick="getCustomer()">Customers List</button>
+            <button onclick="deleteCustomer()">Delete Customer</button>
+            <button onclick="deleteAll()">Delete All</button>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Order</td>
+          <td>
+            <button onclick="getOrderList()">Orders List</button>
+            <button onclick="cancelOrder()">Cancel Order</button>
+            <button onclick="customerOrder()">Customer Orders</button>
+            <button onclick="productOrder()">Product Orders</button>
+            <button onclick="updateStatus()">Update Status</button>
+            <button onclick="deleteOrder()">Delete Order</button>
+            <button onclick="deleteAllOrders()">Delete All</button>
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Product</td>
+          <td>
+            <button onclick="addProduct()">Add Product</button>
+            <button onclick="getAllProducts()">Product List</button>
+            <button onclick="updateProduct()">Update Product</button>
+            <button onclick="getProductById()">Product By ID</button>
+            <button onclick="getProductByCategory()">Product Category</button>
+            <button onclick="deleteProduct()">Delete Product</button>
+          </td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Bank Account</td>
+          <td>
+            <button onclick="getAccountById()">Account By ID</button>
+            <button onclick="getAllAccount()">Account List</button>
+            <button onclick="deleteAccount()">Delete Account</button>
+          </td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Admin</td>
+          <td>
+            <button onclick="registerAdminForm()">Add Admin</button>
+            <button onclick="updateAdmin()">Update Admin</button>
+            <button onclick="getAllAdmin()">Admin List</button>
+            <button onclick="deleteAdmin()">Delete Admin</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div id="container">
+  </div>
+  <div id="containers"></div>
+  <footer>
+    <div class="sociallink">
+      <div>
+        <a href="https://github.com/mishravivek09" target="_blank">
+          <img src="./icons/github.png" alt="github" />
+        </a>
+      </div>
+      <div>
+        <a href="https://www.linkedin.com/in/vivek-mishra-b9339717a/" target="_blank">
+          <img src="./icons/linkedin.png" alt="linkedin" />
+        </a>
+      </div>
+    </div>
+    <div class="admin">
+      <div><a href="admin.html">Admin</a></div>
+    </div>
+    <div class="terms">
+      <div>Privacy</div>
+      <div>Terms</div>
+      <div>FAQs</div>
+      <div>Help</div>
+    </div>
+    <div class="credits">
+      <div>
+        <a href="https://github.com/mishravivek09" target="_blank">@mishravivek09</a>
+      </div>
+      <div>All Right Reserved</div>
+      <div>
+        <a href="https://www.linkedin.com/in/vivek-mishra-b9339717a/" target="_blank">Designed By Vivek Mishra</a>
+      </div>
+    </div>
+  </footer>
+</body>
+<script src="./admin.js"></script>
+
+</html>
