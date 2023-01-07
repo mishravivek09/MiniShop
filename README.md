@@ -7,7 +7,17 @@
 This is a simple E-Commerce website where user can register himself, user can search any product, user can add any product into cart, user will be able to create a basic wallet account, user can order any single product or list of products, user have 2 option to place order first is via wallet or second is via cod.
 A user can update his details (Name,Password,Address), user will be able to trace order status, user will allow to cancel any order before the order status is  changed by admin side, user will able to see all his orders history.
 
+The following link will not work if server execution time is more than 500 hours according to the railway.app
+
+### https://e-commerce-mini-shop.netlify.app/index.html
+
+The first request of the following link will take time upto 30 seconds to 60 seconds for responding
+
+### https://enchanting-licorice-4de592.netlify.app/index.html
+
 Admin will be able to perform following operations.
+
+![ad (2)](https://user-images.githubusercontent.com/100134407/211131278-9eeb22fc-51ef-4412-8db0-f7922136d65b.PNG)
 
 
 `Mini Shop | Home Page`
