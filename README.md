@@ -15,7 +15,7 @@ The first request of the following link will take time upto 30 seconds to 60 sec
 
 ### https://enchanting-licorice-4de592.netlify.app/index.html
 
-Admin will be able to perform following operations.
+Admin will be able to perform following tasks -
 
 ![ad (2)](https://user-images.githubusercontent.com/100134407/211131278-9eeb22fc-51ef-4412-8db0-f7922136d65b.PNG)
 
