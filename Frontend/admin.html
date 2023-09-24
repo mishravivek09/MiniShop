@@ -77,8 +77,12 @@
         <h3><a class="logo2" href="index.html">Shop</a></h3>
       </div>
       <div>
-        <input onkeyup="debounce(mySearchFunction(), 1000)" id="query" type="search"
-          placeholder="Try shirt, T-shirt, Mobile" />
+        <input
+          onkeyup="mySearchFunction()"
+          id="query"
+          type="search"
+          placeholder="Try shirt, T-shirt, Mobile"
+        />
         <img onclick="searchPage()" class="search_icon" src="./icons/search.png" alt="icons" />
       </div>
       <div onclick="profileFun()">
@@ -89,7 +93,7 @@
           <h3 id="profileName" class="menu">Profile</h3>
         </a>
       </div>
-      <div>
+      <div id="cart-link">
         <a class="cart-ref" href="cart.html">
           <img src="./icons/shopping-bag.png" alt="icons" />
         </a>
@@ -99,6 +103,15 @@
       </div>
     </div>
   </nav>
+  <div id="mobile-input">
+    <input
+      onkeyup="mySearchFunction()"
+      id="query2"
+      type="search"
+      placeholder="Try shirt, T-shirt, Mobile"
+    />
+    <img onclick="searchPage()" class="search_icon" src="./icons/search.png" alt="icons" />
+  </div>
   <h2 class="h2">Welcome Admin</h2>
   <div id="adminTable">
     <table>

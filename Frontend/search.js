@@ -1,7 +1,10 @@
 let searchData = JSON.parse(localStorage.getItem("query")) || [];
 function mySearchFunction() {
   let query = document.querySelector("#query").value;
-  let url = `https://mini-project-production.up.railway.app:443/product/search?query=${query}`;
+  if(query==""){
+    query=document.querySelector("#query2").value;
+  }
+  let url = `https://e-commerce-4pkg.onrender.com:443/product/search?query=${query}`;
   localStorage.setItem("usrquery", query);
   fetch(url)
     .then((res) => {
@@ -14,15 +17,7 @@ function mySearchFunction() {
       console.log(err);
     });
 }
-let id;
-function debounce(func, delay) {
-  if (id) {
-    clearTimeout(id);
-  }
-  id = setTimeout(function () {
-    func();
-  }, delay);
-}
+
 document.querySelector("#query").addEventListener("keypress", showSearchResult);
 document.querySelector("#select_sort").addEventListener("change", sortFun);
 function showSearchResult(e) {
@@ -132,7 +127,7 @@ function verifyAdmin() {
     password: passwd
   }
   let admin = JSON.stringify(data);
-  fetch("https://mini-project-production.up.railway.app:443/admin/login", {
+  fetch("https://e-commerce-4pkg.onrender.com:443/admin/login", {
     method: "POST",
     body: admin,
     headers: {
@@ -152,7 +147,7 @@ function verifyAdmin() {
   })
 }
 function getCartItems() {
-  fetch(`https://mini-project-production.up.railway.app:443/cart/get?cartId=${loginData.cartId}`).then((res) => {
+  fetch(`https://e-commerce-4pkg.onrender.com:443/cart/get?cartId=${loginData.cartId}`).then((res) => {
     return res.json();
   }).then((res) => {
     if (res.message == null) {

@@ -50,6 +50,7 @@
     }
 
     #sorting>button {
+      float: right;
       padding: 2px 5px;
       background-color: darkorange;
       color: white;
@@ -60,6 +61,11 @@
 
     #sorting>button:hover {
       background-color: orange;
+    }
+    @media (max-width:720px){
+      #container{
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -72,8 +78,12 @@
         <h3><a class="logo2" href="index.html">Shop</a></h3>
       </div>
       <div>
-        <input onkeyup="debounce(mySearchFunction(), 1000)" id="query" type="search"
-          placeholder="Try shirt, T-shirt, Mobile" />
+        <input
+          onkeyup="mySearchFunction()"
+          id="query"
+          type="search"
+          placeholder="Try shirt, T-shirt, Mobile"
+        />
         <img onclick="searchPage()" class="search_icon" src="./icons/search.png" alt="icons" />
       </div>
       <div onclick="profileFun()">
@@ -84,7 +94,7 @@
           <h3 id="profileName" class="menu">Profile</h3>
         </a>
       </div>
-      <div>
+      <div id="cart-link">
         <a class="cart-ref" href="cart.html">
           <img src="./icons/shopping-bag.png" alt="icons" />
         </a>
@@ -94,6 +104,15 @@
       </div>
     </div>
   </nav>
+  <div id="mobile-input">
+    <input
+      onkeyup="mySearchFunction()"
+      id="query2"
+      type="search"
+      placeholder="Try shirt, T-shirt, Mobile"
+    />
+    <img onclick="searchPage()" class="search_icon" src="./icons/search.png" alt="icons" />
+  </div>
   <div id="sorting"></div>
   <div id="container"></div>
   <div id="body"></div>
@@ -158,7 +177,6 @@
     let btn = document.createElement("button");
     let button = document.createElement("button");
     button.innerHTML = "Empty cart";
-    button.style.marginLeft = "60%";
     button.addEventListener("click", function () {
       emptyCart();
     })
@@ -171,7 +189,7 @@
     document.querySelector("#sorting").append(dis, button, btn);
   }
   function emptyCart() {
-    fetch(`https://mini-project-production.up.railway.app:443/cart/remove/all/${loginData.cartId}`)
+    fetch(`https://e-commerce-4pkg.onrender.com:443/cart/remove/all/${loginData.cartId}`)
       .then((res) => {
         return res.json();
       }).then((res) => {
@@ -182,7 +200,7 @@
       })
   }
   function getCartItems() {
-    fetch(`https://mini-project-production.up.railway.app:443/cart/get?cartId=${loginData.cartId}`).then((res) => {
+    fetch(`https://e-commerce-4pkg.onrender.com:443/cart/get?cartId=${loginData.cartId}`).then((res) => {
       return res.json();
     }).then((res) => {
       if (res.message == null) {
@@ -200,7 +218,6 @@
         });
         let button = document.createElement("button");
         button.innerHTML = "Empty cart";
-        button.style.marginLeft = "60%";
         button.addEventListener("click", function () {
           emptyCart();
         })
@@ -296,7 +313,7 @@
       rating: elem.rating,
     };
     let data = JSON.stringify(productData);
-    fetch("https://mini-project-production.up.railway.app:443/cart/update", {
+    fetch("https://e-commerce-4pkg.onrender.com:443/cart/update", {
       method: "PUT",
       body: data,
       headers: {
@@ -323,7 +340,7 @@
       rating: elem.rating,
     };
     let data = JSON.stringify(productData);
-    fetch(`https://mini-project-production.up.railway.app:443/cart/remove`, {
+    fetch(`https://e-commerce-4pkg.onrender.com:443/cart/remove`, {
       method: "PUT",
       body: data,
       headers: {
@@ -349,7 +366,10 @@
   }
   function mySearchFunction() {
     let query = document.querySelector("#query").value;
-    let url = `https://mini-project-production.up.railway.app:443/product/search?query=${query}`;
+  if(query==""){
+    query=document.querySelector("#query2").value;
+  }
+    let url = `https://e-commerce-4pkg.onrender.com:443/product/search?query=${query}`;
     localStorage.setItem("usrquery", query);
     fetch(url)
       .then((res) => {
@@ -392,7 +412,7 @@
       password: passwd
     }
     let admin = JSON.stringify(data);
-    fetch("https://mini-project-production.up.railway.app:443/admin/login", {
+    fetch("https://e-commerce-4pkg.onrender.com:443/admin/login", {
       method: "POST",
       body: admin,
       headers: {

@@ -17,8 +17,12 @@
         <h3><a class="logo2" href="index.html">Shop</a></h3>
       </div>
       <div>
-        <input onkeyup="debounce(mySearchFunction(), 1000)" id="query" type="search"
-          placeholder="Try shirt, T-shirt, Mobile" />
+        <input
+        onkeyup="mySearchFunction()"
+          id="query"
+          type="search"
+          placeholder="Try shirt, T-shirt, Mobile"
+        />
         <img onclick="searchPage()" class="search_icon" src="./icons/search.png" alt="icons" />
       </div>
       <div onclick="profileFun()">
@@ -26,10 +30,10 @@
           <img src="./icons/user.png" alt="icons" />
         </a>
         <a class="cart-ref" href="#">
-          <h3 class="menu">Profile</h3>
+          <h3 id="profileName" class="menu">Profile</h3>
         </a>
       </div>
-      <div>
+      <div id="cart-link">
         <a class="cart-ref" href="cart.html">
           <img src="./icons/shopping-bag.png" alt="icons" />
         </a>
@@ -39,6 +43,15 @@
       </div>
     </div>
   </nav>
+  <div id="mobile-input">
+    <input
+    onkeyup="mySearchFunction()"
+      id="query2"
+      type="search"
+      placeholder="Try shirt, T-shirt, Mobile"
+    />
+    <img onclick="searchPage()" class="search_icon" src="./icons/search.png" alt="icons" />
+  </div>
   <div class="registration-form">
     <div>
       <h2>Signup</h2>
@@ -128,7 +141,7 @@
     };
     let signupData = JSON.stringify(signup_data);
     let url =
-      "https://mini-project-production.up.railway.app:443/customer/register";
+      "https://e-commerce-4pkg.onrender.com:443/customer/register";
     fetch(url, {
       method: "POST",
       body: signupData,
@@ -160,7 +173,7 @@
     };
     let loginData = JSON.stringify(login_data);
     let url =
-      "https://mini-project-production.up.railway.app:443/customer/login";
+      "https://e-commerce-4pkg.onrender.com:443/customer/login";
     fetch(url, {
       method: "POST",
       body: loginData,
@@ -182,7 +195,6 @@
             localStorage.setItem("session", JSON.stringify(res));
             alert(res.message);
             findAccount(res.customerId);
-            window.location.href = "index.html";
           } else {
             alert(res.message);
           }
@@ -193,7 +205,7 @@
       });
   }
   function findAccount(id) {
-    let url = `https://mini-project-production.up.railway.app:443/account/find/${id}`;
+    let url = `https://e-commerce-4pkg.onrender.com:443/account/find/${id}`;
     fetch(url)
       .then((res) => {
         return res.json();
@@ -202,10 +214,11 @@
         if (res.details != `uri=/account/find/${id}`) {
           localStorage.setItem("account_data", JSON.stringify(res));
         }
+        window.location.href = "index.html";
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
   }
   function profileFun() {
     if (loginData.length == 0) {
@@ -216,7 +229,10 @@
   }
   function mySearchFunction() {
     let query = document.querySelector("#query").value;
-    let url = `https://mini-project-production.up.railway.app:443/product/search?query=${query}`;
+  if(query==""){
+    query=document.querySelector("#query2").value;
+  }
+    let url = `https://e-commerce-4pkg.onrender.com:443/product/search?query=${query}`;
     localStorage.setItem("usrquery", query);
     fetch(url)
       .then((res) => {
@@ -260,7 +276,7 @@
       password: passwd
     }
     let admin = JSON.stringify(data);
-    fetch("https://mini-project-production.up.railway.app:443/admin/login", {
+    fetch("https://e-commerce-4pkg.onrender.com:443/admin/login", {
       method: "POST",
       body: admin,
       headers: {
@@ -280,7 +296,7 @@
     })
   }
   function getCartItems() {
-    fetch(`https://mini-project-production.up.railway.app:443/cart/get?cartId=${loginData.cartId}`).then((res) => {
+    fetch(`https://e-commerce-4pkg.onrender.com:443/cart/get?cartId=${loginData.cartId}`).then((res) => {
       return res.json();
     }).then((res) => {
       if (res.message == null) {

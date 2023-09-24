@@ -12,6 +12,11 @@
         margin: auto;
         text-align: center;
       }
+      @media (max-width:720px){
+        #error{
+          width: 90%;
+        }
+      }
     </style>
 </head>
 <body>
@@ -23,7 +28,7 @@
       </div>
       <div>
         <input
-          onkeyup="debounce(mySearchFunction(), 1000)"
+        onkeyup="mySearchFunction()"
           id="query"
           type="search"
           placeholder="Try shirt, T-shirt, Mobile"
@@ -38,7 +43,7 @@
           <h3 id="profileName" class="menu">Profile</h3>
         </a>
       </div>
-      <div>
+      <div id="cart-link">
         <a class="cart-ref" href="cart.html">
           <img src="./icons/shopping-bag.png" alt="icons" />
         </a>
@@ -48,6 +53,15 @@
       </div>
     </div>
   </nav>
+  <div id="mobile-input">
+    <input
+    onkeyup="mySearchFunction()"
+      id="query2"
+      type="search"
+      placeholder="Try shirt, T-shirt, Mobile"
+    />
+    <img onclick="searchPage()" class="search_icon" src="./icons/search.png" alt="icons" />
+  </div>
       <div id="sorting">
         <p id="searchInput"></p>
         <select id="select_sort">
