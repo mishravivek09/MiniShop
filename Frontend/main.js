@@ -319,7 +319,7 @@ function mySearchFunction() {
     });
 }
 document.querySelector("#query").addEventListener("keypress", showSearchResult);
-
+document.querySelector("#query2").addEventListener("keypress", showSearchResult);
 function showSearchResult(e) {
   if (e.keyCode == 13) {
     window.location.href = "search.html";

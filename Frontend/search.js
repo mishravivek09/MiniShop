@@ -19,7 +19,9 @@ function mySearchFunction() {
 }
 
 document.querySelector("#query").addEventListener("keypress", showSearchResult);
+document.querySelector("#query2").addEventListener("keypress", showSearchResult);
 document.querySelector("#select_sort").addEventListener("change", sortFun);
+
 function showSearchResult(e) {
   if (e.keyCode == 13) {
     window.location.href = "search.html";
@@ -96,8 +98,15 @@ function getSearchData(searchData) {
     price.innerText = `INR : ${rs}`;
     cdiv.append(name, price, rating, p);
     div.append(img, cdiv);
+    div.addEventListener("click",()=>{
+      userClicked(elem);
+    })
     container.append(div);
   });
+}
+function userClicked(data) {
+  localStorage.setItem("clicked", JSON.stringify(data));
+  window.location.href = "description.html";
 }
 
 let usrInput = localStorage.getItem("usrquery");
