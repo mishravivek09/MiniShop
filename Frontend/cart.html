@@ -189,7 +189,7 @@
     document.querySelector("#sorting").append(dis, button, btn);
   }
   function emptyCart() {
-    fetch(`https://e-commerce-4pkg.onrender.com:443/cart/remove/all/${loginData.cartId}`)
+    fetch(`https://mini-shop-lmvw.onrender.com:443/cart/remove/all/${loginData.cartId}`)
       .then((res) => {
         return res.json();
       }).then((res) => {
@@ -200,7 +200,7 @@
       })
   }
   function getCartItems() {
-    fetch(`https://e-commerce-4pkg.onrender.com:443/cart/get?cartId=${loginData.cartId}`).then((res) => {
+    fetch(`https://mini-shop-lmvw.onrender.com:443/cart/get?cartId=${loginData.cartId}`).then((res) => {
       return res.json();
     }).then((res) => {
       if (res.message == null) {
@@ -313,7 +313,7 @@
       rating: elem.rating,
     };
     let data = JSON.stringify(productData);
-    fetch("https://e-commerce-4pkg.onrender.com:443/cart/update", {
+    fetch("https://mini-shop-lmvw.onrender.com:443/cart/update", {
       method: "PUT",
       body: data,
       headers: {
@@ -340,7 +340,7 @@
       rating: elem.rating,
     };
     let data = JSON.stringify(productData);
-    fetch(`https://e-commerce-4pkg.onrender.com:443/cart/remove`, {
+    fetch(`https://mini-shop-lmvw.onrender.com:443/cart/remove`, {
       method: "PUT",
       body: data,
       headers: {
@@ -369,7 +369,7 @@
   if(query==""){
     query=document.querySelector("#query2").value;
   }
-    let url = `https://e-commerce-4pkg.onrender.com:443/product/search?query=${query}`;
+    let url = `https://mini-shop-lmvw.onrender.com:443/product/search?query=${query}`;
     localStorage.setItem("usrquery", query);
     fetch(url)
       .then((res) => {
@@ -414,7 +414,7 @@
       password: passwd
     }
     let admin = JSON.stringify(data);
-    fetch("https://e-commerce-4pkg.onrender.com:443/admin/login", {
+    fetch("https://mini-shop-lmvw.onrender.com:443/admin/login", {
       method: "POST",
       body: admin,
       headers: {

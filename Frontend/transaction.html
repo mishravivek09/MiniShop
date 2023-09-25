@@ -141,7 +141,7 @@
   function addMoney() {
     let bal = prompt("Enter amount", "500");
     let pin = prompt("Enter pincode", "1234");
-    let url = `https://e-commerce-4pkg.onrender.com:443/account/deposit`;
+    let url = `https://mini-shop-lmvw.onrender.com:443/account/deposit`;
 
     let value = {
       amount: bal,
@@ -176,7 +176,7 @@
   function withdrawMoney() {
     let bal = prompt("Enter amount", "500");
     let pin = prompt("Enter pincode", "1234");
-    let url = `https://e-commerce-4pkg.onrender.com:443/account/withdraw`;
+    let url = `https://mini-shop-lmvw.onrender.com:443/account/withdraw`;
 
     let value = {
       amount: bal,
@@ -209,7 +209,7 @@
   }
   function checkBalance() {
     let pin = prompt("Please enter your pincode", "1234");
-    let url = `https://e-commerce-4pkg.onrender.com:443/account/check/balance/${pin}?customerId=${loginData.customerId}`;
+    let url = `https://mini-shop-lmvw.onrender.com:443/account/check/balance/${pin}?customerId=${loginData.customerId}`;
 
     fetch(url)
       .then((res) => {
@@ -231,7 +231,7 @@
   if(query==""){
     query=document.querySelector("#query2").value;
   }
-    let url = `https://e-commerce-4pkg.onrender.com:443/product/search?query=${query}`;
+    let url = `https://mini-shop-lmvw.onrender.com:443/product/search?query=${query}`;
     localStorage.setItem("usrquery", query);
     fetch(url)
       .then((res) => {
@@ -275,7 +275,7 @@
       password: passwd
     }
     let admin = JSON.stringify(data);
-    fetch("https://e-commerce-4pkg.onrender.com:443/admin/login", {
+    fetch("https://mini-shop-lmvw.onrender.com:443/admin/login", {
       method: "POST",
       body: admin,
       headers: {
@@ -295,7 +295,7 @@
     })
   }
   function getCartItems() {
-    fetch(`https://e-commerce-4pkg.onrender.com:443/cart/get?cartId=${loginData.cartId}`).then((res) => {
+    fetch(`https://mini-shop-lmvw.onrender.com:443/cart/get?cartId=${loginData.cartId}`).then((res) => {
       return res.json();
     }).then((res) => {
       if (res.message == null) {

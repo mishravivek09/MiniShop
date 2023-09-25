@@ -259,7 +259,7 @@
       },
     };
     let updateData = JSON.stringify(data);
-    let url = `https://e-commerce-4pkg.onrender.com:443/customer/update?uuid=${loginData.sessionId}`;
+    let url = `https://mini-shop-lmvw.onrender.com:443/customer/update?uuid=${loginData.sessionId}`;
     fetch(url, {
       method: "PUT",
       body: updateData,
@@ -291,7 +291,7 @@
     document.querySelector("#profileName").innerHTML = `Hi, ${loginData.name}`;
   }
   function logoutFun() {
-    let url = `https://e-commerce-4pkg.onrender.com:443/customer/logout?uuid=${loginData.sessionId}`;
+    let url = `https://mini-shop-lmvw.onrender.com:443/customer/logout?uuid=${loginData.sessionId}`;
     fetch(url, {
       method: "DELETE",
     })
@@ -312,7 +312,7 @@
     let email = loginData.email;
     let id = prompt("Please enter order id", "0");
 
-    let url = `https://e-commerce-4pkg.onrender.com:443/orders/status/${email}?orderid=${id}`;
+    let url = `https://mini-shop-lmvw.onrender.com:443/orders/status/${email}?orderid=${id}`;
 
     fetch(url)
       .then((res) => {
@@ -336,7 +336,7 @@
     event.preventDefault();
     let email = loginData.email;
     let id = prompt("Please enter order id", "0");
-    let url = `https://e-commerce-4pkg.onrender.com:443/orders/cancel/${email}?orderid=${id}`;
+    let url = `https://mini-shop-lmvw.onrender.com:443/orders/cancel/${email}?orderid=${id}`;
 
     fetch(url, {
       method: "PUT",
@@ -367,7 +367,7 @@
   if(query==""){
     query=document.querySelector("#query2").value;
   }
-    let url = `https://e-commerce-4pkg.onrender.com:443/product/search?query=${query}`;
+    let url = `https://mini-shop-lmvw.onrender.com:443/product/search?query=${query}`;
     localStorage.setItem("usrquery", query);
     fetch(url)
       .then((res) => {
@@ -421,7 +421,7 @@
       password: passwd
     }
     let admin = JSON.stringify(data);
-    fetch("https://e-commerce-4pkg.onrender.com:443/admin/login", {
+    fetch("https://mini-shop-lmvw.onrender.com:443/admin/login", {
       method: "POST",
       body: admin,
       headers: {
@@ -441,7 +441,7 @@
     })
   }
   function getCartItems() {
-    fetch(`https://e-commerce-4pkg.onrender.com:443/cart/get?cartId=${loginData.cartId}`).then((res) => {
+    fetch(`https://mini-shop-lmvw.onrender.com:443/cart/get?cartId=${loginData.cartId}`).then((res) => {
       return res.json();
     }).then((res) => {
       if (res.message == null) {

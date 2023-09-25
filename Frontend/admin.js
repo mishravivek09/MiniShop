@@ -2,7 +2,7 @@ function addCustomer() {
     window.location.href = "signup.html";
 }
 function getCustomer() {
-    let url = "https://e-commerce-4pkg.onrender.com:443/customer/get/all";
+    let url = "https://mini-shop-lmvw.onrender.com:443/customer/get/all";
     fetch(url).then((res) => {
         return res.json();
     }).then((res) => {
@@ -61,7 +61,7 @@ function showCustomers(data) {
 }
 function deleteCustomer() {
     let email = prompt("Enter customer email address", "abc@gmail.com");
-    let url = `https://e-commerce-4pkg.onrender.com:443/customer/remove?email=${email}`;
+    let url = `https://mini-shop-lmvw.onrender.com:443/customer/remove?email=${email}`;
     fetch(url, {
         method: "DELETE",
     }).then((res) => {
@@ -77,13 +77,13 @@ function deleteAll() {
     alert("All customers will be deleted");
     let email = prompt("Enter your email", "abc@gmail.com");
     let passwd = prompt("Enter your password", "John@1947");
-    let url = "https://e-commerce-4pkg.onrender.com:443/customer/delete/all";
+    let url = "https://mini-shop-lmvw.onrender.com:443/customer/delete/all";
     let data = {
         email: email,
         password: passwd
     }
     let admin = JSON.stringify(data);
-    fetch("https://e-commerce-4pkg.onrender.com:443/admin/login", {
+    fetch("https://mini-shop-lmvw.onrender.com:443/admin/login", {
         method: "POST",
         body: admin,
         headers: {
@@ -111,7 +111,7 @@ function deleteAll() {
     })
 }
 function getOrderList() {
-    let url = `https://e-commerce-4pkg.onrender.com:443/orders/get/all`;
+    let url = `https://mini-shop-lmvw.onrender.com:443/orders/get/all`;
     fetch(url).then((res) => {
         return res.json();
     }).then((res) => {
@@ -173,7 +173,7 @@ function cancelOrder() {
     event.preventDefault();
     let id = prompt("Please enter order id", "0");
     let email = prompt("Enter customer email", "john@gmail.com");
-    let url = `https://e-commerce-4pkg.onrender.com:443/orders/cancel/${email}?orderid=${id}`;
+    let url = `https://mini-shop-lmvw.onrender.com:443/orders/cancel/${email}?orderid=${id}`;
 
     fetch(url, {
         method: "PUT",
@@ -248,7 +248,7 @@ function statusUpdate(id, status) {
     }
     let jsonData = JSON.stringify(data);
 
-    let url = "https://e-commerce-4pkg.onrender.com:443/orders/update/status";
+    let url = "https://mini-shop-lmvw.onrender.com:443/orders/update/status";
     fetch(url, {
         method: "PUT",
         body: jsonData,
@@ -269,7 +269,7 @@ function statusUpdate(id, status) {
 }
 function customerOrder() {
     let email = prompt("Enter customer email", "john@gmail.com");
-    let url = `https://e-commerce-4pkg.onrender.com:443/orders/customer?email=${email}`;
+    let url = `https://mini-shop-lmvw.onrender.com:443/orders/customer?email=${email}`;
     fetch(url).then((res) => {
         return res.json();
     }).then((res) => {
@@ -331,7 +331,7 @@ function showCustomerOrder(data) {
 }
 function productOrder() {
     let id = prompt("Enter order id", "0");
-    let url = `https://e-commerce-4pkg.onrender.com:443/orders/products?orderid=${id}`;
+    let url = `https://mini-shop-lmvw.onrender.com:443/orders/products?orderid=${id}`;
     fetch(url).then((res) => {
         return res.json();
     }).then((res) => {
@@ -380,7 +380,7 @@ function showProductOrder(data, text) {
 }
 function deleteOrder() {
     let id = prompt("Enter order id :", "0");
-    let url = `https://e-commerce-4pkg.onrender.com:443/orders/delete?orderid=${id}`;
+    let url = `https://mini-shop-lmvw.onrender.com:443/orders/delete?orderid=${id}`;
     fetch(url, {
         method: "DELETE",
     }).then((res) => {
@@ -396,13 +396,13 @@ function deleteAllOrders() {
     alert("All orders will be deleted");
     let email = prompt("Enter your email", "abc@gmail.com");
     let passwd = prompt("Enter your password", "John@1947");
-    let url = "https://e-commerce-4pkg.onrender.com:443/orders/delete/all";
+    let url = "https://mini-shop-lmvw.onrender.com:443/orders/delete/all";
     let data = {
         email: email,
         password: passwd
     }
     let admin = JSON.stringify(data);
-    fetch("https://e-commerce-4pkg.onrender.com:443/admin/login", {
+    fetch("https://mini-shop-lmvw.onrender.com:443/admin/login", {
         method: "POST",
         body: admin,
         headers: {
@@ -503,7 +503,7 @@ function addProduct() {
 }
 function addProductItem(data) {
     event.preventDefault();
-    fetch("https://e-commerce-4pkg.onrender.com:443/product/add", {
+    fetch("https://mini-shop-lmvw.onrender.com:443/product/add", {
         method: "POST",
         body: data,
         headers: {
@@ -522,7 +522,7 @@ function addProductItem(data) {
     })
 }
 function getAllProducts() {
-    fetch("https://e-commerce-4pkg.onrender.com:443/product/all")
+    fetch("https://mini-shop-lmvw.onrender.com:443/product/all")
         .then((res) => {
             return res.json();
         }).then((res) => {
@@ -662,7 +662,7 @@ function updateProduct() {
 }
 function updateProductItem(data) {
     event.preventDefault();
-    fetch("https://e-commerce-4pkg.onrender.com:443/product/update", {
+    fetch("https://mini-shop-lmvw.onrender.com:443/product/update", {
         method: "PUT",
         body: data,
         headers: {
@@ -682,7 +682,7 @@ function updateProductItem(data) {
 }
 function getProductById() {
     let id = prompt("Please enter product id", "0");
-    fetch(`https://e-commerce-4pkg.onrender.com:443/product/get?id=${id}`)
+    fetch(`https://mini-shop-lmvw.onrender.com:443/product/get?id=${id}`)
         .then((res) => {
             return res.json();
         }).then((res) => {
@@ -731,7 +731,7 @@ function showProduct(elem) {
 function getProductByCategory() {
     let cat = prompt("Enter product category", "Men");
     let category = cat.toUpperCase();
-    fetch(`https://e-commerce-4pkg.onrender.com:443/product/category?cat=${category}`)
+    fetch(`https://mini-shop-lmvw.onrender.com:443/product/category?cat=${category}`)
         .then((res) => {
             return res.json();
         }).then((res) => {
@@ -747,7 +747,7 @@ function getProductByCategory() {
 }
 function deleteProduct() {
     let id = prompt("Enter product id", "0");
-    fetch(`https://e-commerce-4pkg.onrender.com:443/product/remove?id=${id}`, {
+    fetch(`https://mini-shop-lmvw.onrender.com:443/product/remove?id=${id}`, {
         method: "DELETE"
     }).then((res) => {
         return res.json();
@@ -763,7 +763,7 @@ function deleteProduct() {
 }
 function getAccountById() {
     let id = prompt("Enter account no.", "0");
-    fetch(`https://e-commerce-4pkg.onrender.com:443/account/find/${id}`)
+    fetch(`https://mini-shop-lmvw.onrender.com:443/account/find/${id}`)
         .then((res) => {
             return res.json();
         }).then((res) => {
@@ -818,7 +818,7 @@ function displayAccount(elem) {
     container.append(table);
 }
 function getAllAccount() {
-    fetch("https://e-commerce-4pkg.onrender.com:443/account/get/all")
+    fetch("https://mini-shop-lmvw.onrender.com:443/account/get/all")
         .then((res) => {
             return res.json();
         }).then((res) => {
@@ -877,7 +877,7 @@ function displayAllAccount(data) {
 }
 function deleteAccount() {
     let id = prompt("Enter account no.", "0");
-    fetch(`https://e-commerce-4pkg.onrender.com:443/account/delete?id=${id}`, {
+    fetch(`https://mini-shop-lmvw.onrender.com:443/account/delete?id=${id}`, {
         method: "DELETE"
     }).then((res) => {
         return res.json();
@@ -894,7 +894,7 @@ function deleteAccount() {
 function registerAdmin(data) {
     event.preventDefault();
 
-    fetch("https://e-commerce-4pkg.onrender.com:443/admin/register", {
+    fetch("https://mini-shop-lmvw.onrender.com:443/admin/register", {
         method: "POST",
         body: data,
         headers: {
@@ -990,7 +990,7 @@ function updateAdmin() {
 }
 function updateAdminHandler(data) {
     event.preventDefault();
-    fetch("https://e-commerce-4pkg.onrender.com:443/admin/update", {
+    fetch("https://mini-shop-lmvw.onrender.com:443/admin/update", {
         method: "PUT",
         body: data,
         headers: {
@@ -1009,7 +1009,7 @@ function updateAdminHandler(data) {
     })
 }
 function getAllAdmin() {
-    fetch("https://e-commerce-4pkg.onrender.com:443/admin/all").then((res) => {
+    fetch("https://mini-shop-lmvw.onrender.com:443/admin/all").then((res) => {
         return res.json();
     }).then((res) => {
         if (res.message == null) {
@@ -1063,7 +1063,7 @@ function displayAllAdmin(data) {
 }
 function deleteAdmin() {
     let id = prompt("Enter admin email id", "john@gmail.com");
-    fetch(`https://e-commerce-4pkg.onrender.com:443/admin/delete?email=${id}`, {
+    fetch(`https://mini-shop-lmvw.onrender.com:443/admin/delete?email=${id}`, {
         method: "DELETE"
     }).then((res) => {
         return res.json();
@@ -1082,7 +1082,7 @@ function mySearchFunction() {
   if(query==""){
     query=document.querySelector("#query2").value;
   }
-    let url = `https://e-commerce-4pkg.onrender.com:443/product/search?query=${query}`;
+    let url = `https://mini-shop-lmvw.onrender.com:443/product/search?query=${query}`;
     localStorage.setItem("usrquery", query);
     fetch(url)
         .then((res) => {
